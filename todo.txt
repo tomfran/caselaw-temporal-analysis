@@ -1,0 +1,8 @@
+SECONDO NOTEBOOK:
+
+1) Usare il vectorizer nel secondo notebook, partendo dal dataset preprocessato.
+2) Clustering con 3 cluster (elbow-method), Topic modelling con 3 topic? cosa succede.
+3) Cercare come aumentare il peso di alcune parole, per "guidare" topic modelling o clustering.
+4) Topic modelling LDA, LSI o clustering K-means guidato.
+5) Differenze tra 2 e 4.
+6) Divisi per annate? Divisi per topic.
