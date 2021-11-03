@@ -23,3 +23,7 @@ class Dataset():
     def save_json(self, processed):
         with open(self.save_path, "w") as f:
             f.write(json.dumps(processed))
+            
+    def load_json(self): 
+        with open(self.save_path) as f: 
+            return json.load(f)

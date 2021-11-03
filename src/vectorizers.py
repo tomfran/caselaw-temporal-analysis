@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
-from tokenizers import *
+from .tokenizers import *
 from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np
+import pickle
 
 class Vectorizer(ABC):
 
@@ -17,7 +19,10 @@ class Vectorizer(ABC):
         pass
     
 class TfIdfVectors(Vectorizer):
-
+    
+    vectors_save_path="../data/processed/tfidf.npy"
+    vectorizer_save_path="../data/models/tfidf.pickle"
+    
     def __init__(self, documents, tokenizer):
         super().__init__(documents, tokenizer)
         self.vectorizer = TfidfVectorizer(tokenizer=self.tokenizer.tokenize)
@@ -27,6 +32,24 @@ class TfIdfVectors(Vectorizer):
 
     def vec(self, document):
         return self.vectorizer.transform([document])
+    
+    def save_vectors_vectorizer(self, vectors):
+        with open(TfIdfVectors.vectors_save_path, "wb") as f:
+            np.save(f, vectors)
+        
+        with open(TfIdfVectors.vectorizer_save_path, "wb") as f: 
+            pickle.dump(self.vectorizer, f)
+    
+    @staticmethod
+    def load_vectors_vectorizer():
+        with open(TfIdfVectors.vectors_save_path, "rb") as f:
+            loaded_vectors = np.load(f, allow_pickle=True).item()
+        
+        with open(TfIdfVectors.vectorizer_save_path, "rb") as f:
+            loaded_vectorizer = pickle.load(f)
+        
+        return loaded_vectors, loaded_vectorizer
+    
     
 if __name__ == "__main__":
     doc = ["An apple fell from the tree", 
