@@ -2,12 +2,8 @@ from abc import ABC, abstractmethod
 import spacy
 import nltk
 
-class Tokenizer(ABC): 
-    
-    @abstractmethod
-    def tokenize(self, text):
-        pass
-    
+from .abstract_classes import Tokenizer
+
 class SpacyTokenizer(Tokenizer):
 
     def __init__(self):

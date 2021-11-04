@@ -3,6 +3,10 @@ data/raw/*
 data/processed/*
 data/
 
+notebooks/dask*
+notebooks/test*
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

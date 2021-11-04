@@ -1,23 +1,10 @@
-from abc import ABC, abstractmethod
-from .tokenizers import *
 from sklearn.feature_extraction.text import TfidfVectorizer as tfidfvect, CountVectorizer as countvec
 import numpy as np
 import pickle
 
-class Vectorizer(ABC):
+from .tokenizers import *
+from .abstract_classes import Vectorizer
 
-    def __init__(self, documents, tokenizer):
-        self.tokenizer = tokenizer
-        self.documents = documents
-
-    @abstractmethod
-    def vectors(self):
-        pass
-
-    @abstractmethod
-    def vec(self, document):
-        pass
-    
 class TfIdfVectorizer(Vectorizer):
     
     vectors_save_path="../data/processed/tfidf.npy"
