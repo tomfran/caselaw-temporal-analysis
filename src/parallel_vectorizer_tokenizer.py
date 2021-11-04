@@ -7,6 +7,7 @@ import nltk
 from nltk.corpus import stopwords
 import spacy
 import dask.dataframe as ddf
+from collections import defaultdict
 
 from .abstract_classes import *
 
@@ -53,7 +54,19 @@ class BatchTokenizer(Tokenizer):
         # df = self.clean_text(df)
         ll = df.values.tolist()
         return [el[0] for el in ll]
-
+    
+    def remove_useless(self, tokens):
+        
+        def check(n): 
+            return n < len(tokens)*0.90
+        
+        freq = defaultdict(lambda : 0)
+        for doc in tokens:
+            for word in set(doc):
+                freq[word] += 1   
+            
+        return [[el for el in doc if check(freq[el])] for doc in tokens]
+        
 class FastTfIdfVectorizer(Vectorizer):
     
     vectors_save_path="../data/processed/tfidf.npy"
@@ -68,6 +81,7 @@ class FastTfIdfVectorizer(Vectorizer):
 
     def vectors(self):
         tokens = self.tokenizer.tokenize(self.documents)
+        tokens = self.tokenizer.remove_useless(tokens)
         return self.vectorizer.fit_transform(tokens)
 
     def vec(self, document):
