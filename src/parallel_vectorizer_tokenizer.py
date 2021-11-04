@@ -69,8 +69,8 @@ class BatchTokenizer(Tokenizer):
         
 class FastTfIdfVectorizer(Vectorizer):
     
-    vectors_save_path="../data/processed/tfidf.npy"
-    vectorizer_save_path="../data/models/tfidf.pickle"
+    vectors_save_path="../data/processed/fast_tfidf.npy"
+    vectorizer_save_path="../data/models/fast_tfidf.pickle"
     
     def __init__(self, documents, tokenizer):
         super().__init__(documents, tokenizer)
@@ -85,8 +85,21 @@ class FastTfIdfVectorizer(Vectorizer):
         return self.vectorizer.fit_transform(tokens)
 
     def vec(self, document):
-        return self.vectorizer.transform([document])
-    
+        tokens = self.tokenizer.tokenize(document)
+        tokens = self.tokenizer.remove_useless(tokens)
+        return self.vectorizer.transform(tokens)
+
+    def increaseWeightImportantWords(self, vectors, multiplier=2.0):
+        def preProcessing(words):
+            tokens = self.tokenizer.tokenize(words)
+            tokens = self.tokenizer.remove_useless(tokens)
+            print(tokens)
+            return tokens
+
+        for importantWord in preProcessing([word for topicWords in self.important_topics.values() for word in topicWords]):
+            position = self.vectorizer.vocabulary_[importantWord[0]]
+            vectors[:, position] *= multiplier
+
     def save_vectors_vectorizer(self, vectors):
         with open(FastTfIdfVectorizer.vectors_save_path, "wb") as f:
             np.save(f, vectors)
