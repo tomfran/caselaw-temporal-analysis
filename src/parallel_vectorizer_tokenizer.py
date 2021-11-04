@@ -47,10 +47,10 @@ class BatchTokenizer(Tokenizer):
     def tokenize(self, documents):
         df = pd.DataFrame()
         df = df.assign(text=documents)
-        # dask_dataframe = ddf.from_pandas(df, npartitions=4)
-        # result = dask_dataframe.map_partitions(self.clean_text, meta=df)
-        # df = result.compute()
-        df = self.clean_text(df)
+        dask_dataframe = ddf.from_pandas(df, npartitions=4)
+        result = dask_dataframe.map_partitions(self.clean_text, meta=df)
+        df = result.compute()
+        # df = self.clean_text(df)
         ll = df.values.tolist()
         return [el[0] for el in ll]
 

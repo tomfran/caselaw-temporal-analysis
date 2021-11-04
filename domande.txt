@@ -1,2 +1,3 @@
 1) geograficamente scegliamo le 4 corti presenti in illinois o estendiamo agli altri dataset?
 2) per LDA dobbiamo usare un count vectorizer o va bene tfidf?
+3) abbiamo provato a fare lemmatization, è lentissima con spacy, ha senso? la facciamo lo stesso? 6 ore e mezza
