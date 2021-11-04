@@ -1,3 +1,5 @@
 1) geograficamente scegliamo le 4 corti presenti in illinois o estendiamo agli altri dataset?
 2) per LDA dobbiamo usare un count vectorizer o va bene tfidf?
-3) abbiamo provato a fare lemmatization, è lentissima con spacy, ha senso? la facciamo lo stesso? 6 ore e mezza
+3) lemmatization è lentissima con spacy // 6 ore, pensavamo di usare stemming o qualche altro lemmatizer come alternativa.
+4) provando topic modelling compaiono sempre le stesse parole, le aggiungiamo alle stopwords?
+5) come "guidare" LDA e clustering? per ora abbiamo provato a modificare i vettori aumentando il peso di alcune parole.
