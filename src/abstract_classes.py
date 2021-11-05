@@ -28,7 +28,11 @@ class Vectorizer(ABC):
         pass
 
 class Tokenizer(ABC): 
-        
+
+    too_frequent_words = ['action', 'contract', 'defendants', 'plaintiff', 'trial', '2d', 'sentence', 'state', 'property',
+                          'plaintiffs', 'case', 'appellee', 'made', 'upon', 'judgment', 'counsel', 'people',
+                          'appellant', 'law', 'defendant', 'act', 'said']
+
     @abstractmethod
     def tokenize(self, text):
         pass

@@ -19,7 +19,8 @@ def dummy(x):
 class BatchTokenizer(Tokenizer):
     
     stop_words = stopwords.words("english")
-    stop_words.extend(["from","subject","summary","keywords","article"])
+    stop_words.extend(["from", "subject", "summary", "keywords", "article"])
+    stop_words.extend(Tokenizer.too_frequent_words)
     nlp = spacy.load("en_core_web_sm")
 
     def remove_newlinechars(self, text):
@@ -93,12 +94,14 @@ class FastTfIdfVectorizer(Vectorizer):
         def preProcessing(words):
             tokens = self.tokenizer.tokenize(words)
             tokens = self.tokenizer.remove_useless(tokens)
-            print(tokens)
             return tokens
 
         for importantWord in preProcessing([word for topicWords in self.important_topics.values() for word in topicWords]):
-            position = self.vectorizer.vocabulary_[importantWord[0]]
-            vectors[:, position] *= multiplier
+            try:
+                position = self.vectorizer.vocabulary_[importantWord[0]]
+                vectors[:, position] *= multiplier
+            except Exception as e:
+                print(f"{e} not present")
 
     def save_vectors_vectorizer(self, vectors):
         with open(FastTfIdfVectorizer.vectors_save_path, "wb") as f:
