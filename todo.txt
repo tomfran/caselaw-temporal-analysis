@@ -11,3 +11,17 @@
     riscritta la classe vectorizer, tolte quelle astratte
 
 - tokenizer che salva su disco e carica
+
+Considerazioni:
+- non è possibile tokenizzare in locale con il modello md, usa 30gb di ram
+- su google colab: 
+
+    modello md,     process -1,     niente batch size,  100 doc,    67s 
+    modello md,     process -1,     batch size 50,      100 doc,    68s
+    modello md,     process 1,      batch size 50,      100 doc,    19s
+    modello md,     process 1,      batch size 1000,    10k doc,    19s
+
+
+    n.b. serve impostare spawn sennò crasha tutto sul multiprocessing, 
+    probabilmente è lento quello.
+

@@ -12,7 +12,7 @@ class BatchTokenizer():
     
     def tokenize(self, documents):
         tokens = []
-        for doc in self.nlp.pipe(documents, n_process=-1):
+        for doc in self.nlp.pipe(documents, batch_size = 50, n_process=-1):
             tokens.append([token.lemma_.lower() for token in doc 
                         if token.pos_ in ['NOUN', 'PROPN', 'VERB', 'ADJ', 'ADV']])
             
