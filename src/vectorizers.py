@@ -1,17 +1,16 @@
-from sklearn.feature_extraction.text import TfidfVectorizer as tfidfvect
 import pickle
 import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-from .tokenizers import DocumentTokenizer
-from .abstract_classes import Vectorizer
+def identity_tokenizer(x):
+    return x
 
-class DocumentVectorizer(Vectorizer):
+class TokenTfidfVectorizer():
     
-    def __init__(self, documents, tokenizer, min_max_df=(1, 1.0)):
-        super().__init__(documents, tokenizer)
-        self.vectorizer = tfidfvect(tokenizer=self.tokenizer.tokenize, 
-                                    max_df=min_max_df[1], 
-                                    min_df=min_max_df[0])
+    def __init__(self, documents):
+        self.vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, 
+                                          lowercase=False)
+        self.documents = documents
         
     def vectors(self):
         return self.vectorizer.fit_transform(self.documents)

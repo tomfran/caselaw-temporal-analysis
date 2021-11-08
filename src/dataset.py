@@ -25,5 +25,12 @@ class Dataset():
             f.write(json.dumps(processed))
             
     def load_json(self): 
-        with open(self.save_path) as f: 
+        with open(self.save_path, "r") as f: 
             return json.load(f)
+        
+    def load_text_list(self, size=-1):
+        data = self.load_json()
+        texts = [document["opinions"][i]["text"] 
+                for document in data 
+                for i in range(len(document["opinions"]))][::size] 
+        return texts[0:size] if size != -1 else texts

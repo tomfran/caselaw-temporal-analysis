@@ -1,2 +1,13 @@
-1. Individuare le stopwords ed eliminarle post vettorizzazione, dentro vectorizer
-2. leggere paper lda e lsi guidati
+8/11:
+
+- prove con modello md di spacy: 
+    serve per i vector delle parole, impiega 30 secondi su 100 documenti;
+    https://spacy.io/models/en#en_core_web_md
+    Provato con la pipeline senza parser ma con senter, non cambia nulla
+    https://spacy.io/usage/spacy-101#pipelines.
+
+- vectorizer su testi gia tokenizzati:
+    https://www.davidsbatista.net/blog/2018/02/28/TfidfVectorizer/
+    riscritta la classe vectorizer, tolte quelle astratte
+
+- tokenizer che salva su disco e carica
