@@ -6,7 +6,7 @@ data/
 notebooks/dask*
 notebooks/test*
 
-
+src/text*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
