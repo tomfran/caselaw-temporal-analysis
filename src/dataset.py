@@ -32,5 +32,5 @@ class Dataset():
         data = self.load_json()
         texts = [document["opinions"][i]["text"] 
                 for document in data 
-                for i in range(len(document["opinions"]))][::size] 
+                for i in range(len(document["opinions"]))]
         return texts[0:size] if size != -1 else texts
