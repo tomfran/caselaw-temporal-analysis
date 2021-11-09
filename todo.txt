@@ -25,3 +25,4 @@ Considerazioni:
     n.b. serve impostare spawn sennò crasha tutto sul multiprocessing, 
     probabilmente è lento quello.
 
+- si possono utilizzare le intersezioni di query per creare l'andamento delle coppie

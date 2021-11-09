@@ -29,3 +29,18 @@ class BatchTokenizer():
     def load_tokens(tokens_save_path="../data/processed/tokens.json"):
         with open(tokens_save_path, "r") as f:
             return json.load(f)
+    
+    @staticmethod
+    def merge_tokens(tokens_dir="../data/processed/tokens", output="../data/processed/tokens.json"):
+        files = [f"{tokens_dir}/{el}" 
+                 for el in sorted(os.listdir(tokens_dir))]
+        
+        token_list = []
+        
+        for el in files: 
+            token_list += json.load(open(el))
+        
+        with open(output, "w") as f:
+            f.write(json.dumps(token_list))
+            
+        return token_list
