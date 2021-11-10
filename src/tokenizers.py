@@ -42,5 +42,3 @@ class BatchTokenizer():
         
         with open(output, "w") as f:
             f.write(json.dumps(token_list))
-            
-        return token_list
