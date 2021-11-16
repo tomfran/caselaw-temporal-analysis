@@ -3,6 +3,8 @@ data/raw/*
 data/processed/*
 data/
 
+papers/
+
 notebooks/dask*
 notebooks/test*
 
