@@ -1,15 +1,20 @@
 import pickle
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 
 def identity_tokenizer(x):
     return x
 
-class TokenTfidfVectorizer():
+class TokenVectorizer():
     
-    def __init__(self, documents):
-        self.vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, 
-                                          lowercase=False)
+    def __init__(self, documents, method="tfidf"):
+        self.method = method
+        if method == "tfidf":
+            self.vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, 
+                                              lowercase=False)
+        else:
+            self.vectorizer = CountVectorizer(tokenizer=identity_tokenizer, 
+                                              lowercase=False)
         self.documents = documents
         
     def vectors(self):
