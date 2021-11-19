@@ -31,3 +31,10 @@ Considerazioni:
 17/11
 - tante parole di interesse non sono presenti nei token filtrati (rimosse cose che non compaiono più dell'1 percento)
 - rifare tokenizzazione tenendo tutto? da testare su magari 100 documenti e vedere se si trova di più
+
+18/11
+- tantissime parole appaiono in meno dell'1 percento dei documenti, è fattibile poichè 
+il numero di casi legati ad esempio alla droga potrebbero essere molto meno di altri
+- riducendo i token a quelli che appaiono almeno 20 volte si trovano quasi tutti i 
+termini di interesse definiti nella consegna
+- lda classico non porta a nulla di interessante, si deve testare quello guided
