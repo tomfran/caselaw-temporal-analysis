@@ -19,8 +19,8 @@ class BatchTokenizer():
         return [[x for x in doc if x not in punctuation and x not in digits] 
                 for doc in tokens]
     
-    def save_tokens(self, 
-                    tokens, 
+    @staticmethod
+    def save_tokens(tokens, 
                     tokens_save_path="../data/processed/tokens.json"):
         with open(tokens_save_path, "w") as f:
             f.write(json.dumps(tokens))    
