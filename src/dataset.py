@@ -1,54 +1,71 @@
 import json
+import re
+from collections import defaultdict
 
 class Dataset(): 
     
-    def __init__(self, dataset_path, save_path):
+    def __init__(self, dataset_path, save_folder="../data/processed/docs"):
         self.dataset_path = dataset_path
-        self.save_path = save_path
+        self.save_folder = save_folder
     
     def process_line(self, document):
+        
+        def clean(word):
+            word = re.sub(r'[\W_]+', ' ', word)
+            word = re.sub(r'\d+', '', word)
+            return word.lower()
+        
         to_save = {} 
         document = json.loads(document)
         
         to_save["id"] = document["id"]
         to_save["name"] = document["name"]
         to_save["decision_date"] = int(document["decision_date"][:4])
-        to_save["opinions"] = document["casebody"]["data"]["opinions"]
-        return to_save         
+        
+        text = ""
+        for op in document["casebody"]["data"]["opinions"]:
+            text += op["text"] + " "
+            
+        to_save["text"] = clean(text)
+        
+        return to_save
     
     def process_lines(self):
         with open(self.dataset_path) as f:
             return [self.process_line(line) for line in f]
         
-    def save_json(self, processed, overwrite_path=None):
+    def partition_data(self):
+        partitions = defaultdict(lambda : [])
         
-        path = self.save_path
-        if overwrite_path:
-            path = overwrite_path
-                            
-        with open(path, "w") as f:
-            f.write(json.dumps(processed))
+        data = self.process_lines()
+        for case in sorted(data, key=lambda x : x["decision_date"]):
+            year = case["decision_date"]//20 * 20
+            partitions[year] += [case]
             
-    def load_json(self): 
-        with open(self.save_path, "r") as f: 
+        return partitions
+            
+    def partition_save(self):
+        path = self.save_folder
+        partitions = self.partition_data()
+        
+        for year, documents in partitions.items():
+            path = f"{self.save_folder}/{year}.json"
+            print(f"Saving documents from {year} to {year+19}")
+            with open(path, "w") as f:
+                f.write(json.dumps(documents))
+            
+    def load_json(self, path): 
+        with open(path, "r") as f: 
             return json.load(f)
         
-    def load_text_list(self, size=-1, field_name="text"):
-        data = self.load_json()
-        texts = [document["opinions"][i][field_name] 
-                for document in data 
-                for i in range(len(document["opinions"]))]
-        return texts[0:size] if size != -1 else texts
-    
-    def save_token_dataset(self, tokens_path="../data/processed/tokens.json"):
-        tokens = json.load(open(tokens_path))
-        data = self.load_json()
+    def load_dataset(self, year=None):
+        if year:
+            return self.load_json(f"{self.save_folder}/{year}.json")
         
-        i = 0
-        for case in data:
-            for opinion in case["opinions"]:
-                opinion.pop("text")
-                opinion["tokens"] = tokens[i]
-                i += 1
-                
-        self.save_json(data, overwrite_path="../data/processed/tokenized_processed.json")
+        file_names = [f"{self.save_folder}/{file}" for file in sorted(os.listdir(self.save_folder))]
+        
+        data = []
+        for f in file_names:
+            data += self.load_json(f)
+        
+        return data
