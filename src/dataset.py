@@ -1,13 +1,18 @@
+import os
 import json
 import re
 from collections import defaultdict
 
 class Dataset(): 
     
-    def __init__(self, dataset_path, save_folder="../data/processed/docs"):
+    def __init__(self, 
+                 dataset_path="", 
+                 save_folder="../data/processed/docs", 
+                 tokens_folder="../data/processed/tokens"):
         self.dataset_path = dataset_path
         self.save_folder = save_folder
-    
+        self.tokens_folder = tokens_folder
+        
     def process_line(self, document):
         
         def clean(word):
@@ -58,11 +63,13 @@ class Dataset():
         with open(path, "r") as f: 
             return json.load(f)
         
-    def load_dataset(self, year=None):
-        if year:
-            return self.load_json(f"{self.save_folder}/{year}.json")
+    def load_dataset(self, year=None, tokens=False):
+        base_folder = self.tokens_folder if tokens else self.save_folder
         
-        file_names = [f"{self.save_folder}/{file}" for file in sorted(os.listdir(self.save_folder))]
+        if year:
+            return self.load_json(f"{base_folder}/{year}.json")
+        
+        file_names = [f"{base_folder}/{file}" for file in sorted(os.listdir(base_folder))]
         
         data = []
         for f in file_names:

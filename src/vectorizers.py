@@ -44,4 +44,3 @@ class TokenVectorizer():
         loaded_vectorizer = pickle.load(open(vectorizer_save_path, "rb"))    
         
         return loaded_vectors, loaded_vectorizer
-
