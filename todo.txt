@@ -38,3 +38,8 @@ il numero di casi legati ad esempio alla droga potrebbero essere molto meno di a
 - riducendo i token a quelli che appaiono almeno 20 volte si trovano quasi tutti i 
 termini di interesse definiti nella consegna
 - lda classico non porta a nulla di interessante, si deve testare quello guided
+
+21/11
+Calcolare coherence score del modello lda per capire quanti topic servono, 
+fare grid search per alpha e beta, prima di fare guided lda.
+
