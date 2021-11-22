@@ -26,7 +26,7 @@ class Dataset():
         to_save["id"] = document["id"]
         to_save["name"] = document["name"]
         to_save["decision_date"] = int(document["decision_date"][:4])
-        
+        to_save["court"] = document["court"]["name"]
         text = ""
         for op in document["casebody"]["data"]["opinions"]:
             text += op["text"] + " "
