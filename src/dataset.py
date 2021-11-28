@@ -26,7 +26,7 @@ class Dataset():
         to_save["id"] = document["id"]
         to_save["name"] = document["name"]
         to_save["decision_date"] = int(document["decision_date"][:4])
-        to_save["court""court"] = document["court"]["name"]
+        to_save["court"] = document["court"]["name"]
         text = ""
         for op in document["casebody"]["data"]["opinions"]:
             text += op["text"] + " "
@@ -58,21 +58,44 @@ class Dataset():
             print(f"Saving documents from {year} to {year+19}")
             with open(path, "w") as f:
                 f.write(json.dumps(documents))
+
+    def merge_tokens_data(self):
+        docs = sorted(os.listdir(self.save_folder))
+        
+        for doc in docs:
+                        
+            doc_path = f"{self.save_folder}/{doc}"
+            tokens_path = f"{self.tokens_folder}/{doc}"
+            print(f"Processing {doc}")
+            
+            data = self.load_json(doc_path)
+            tokens = self.load_json(tokens_path)
+            
+            for i,el in enumerate(data):
+                el["tokens"] = tokens[i]
+            
+            with open(doc_path, "w") as f:
+                f.write(json.dumps(data))
             
     def load_json(self, path): 
         with open(path, "r") as f: 
             return json.load(f)
         
-    def load_dataset(self, year=None, tokens=False):
-        base_folder = self.tokens_folder if tokens else self.save_folder
+    def load_dataset(self, year=None, tokens=False, courts=None):
         
         if year:
-            return self.load_json(f"{base_folder}/{year}.json")
+            return self.load_json(f"{self.save_folder}/{year}.json")
         
-        file_names = [f"{base_folder}/{file}" for file in sorted(os.listdir(base_folder))]
+        file_names = [f"{self.save_folder}/{file}" for file in sorted(os.listdir(self.save_folder))]
         
         data = []
         for f in file_names:
             data += self.load_json(f)
+        
+        if courts:
+            data = [el for el in data if el["court"] in courts]
+        
+        if tokens:
+            return [el["tokens"] for el in data]
         
         return data
