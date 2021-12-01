@@ -84,14 +84,13 @@ class Dataset():
     def load_dataset(self, year=None, tokens=False, courts=None):
         
         if year:
-            return self.load_json(f"{self.save_folder}/{year}.json")
-        
-        file_names = [f"{self.save_folder}/{file}" for file in sorted(os.listdir(self.save_folder))]
-        
-        data = []
-        for f in file_names:
-            data += self.load_json(f)
-        
+            data = self.load_json(f"{self.save_folder}/{year}.json")
+        else:
+            file_names = [f"{self.save_folder}/{file}" for file in sorted(os.listdir(self.save_folder))]    
+            data = []
+            for f in file_names:
+                data += self.load_json(f)
+            
         if courts:
             data = [el for el in data if el["court"] in courts]
         
