@@ -1,2 +1,2 @@
 # legal-texts-retrieval
-Information retrieval techniques appliued to legal texts.
+Information retrieval techniques applied to legal texts.
