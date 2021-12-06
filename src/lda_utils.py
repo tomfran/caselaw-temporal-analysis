@@ -3,6 +3,7 @@ import numpy as np
 def normalize_dict(d, precision=3):
     
     tot = sum(d.values())
+    if tot == 0: return d
     return {k : round(v*100/tot, precision) for k,v in d.items()}
     
 def get_word_relevance(word, word2id, vocab, lda_model, normalize=False, precision=3):
