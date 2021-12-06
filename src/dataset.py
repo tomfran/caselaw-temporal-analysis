@@ -81,7 +81,7 @@ class Dataset():
         with open(path, "r") as f: 
             return json.load(f)
         
-    def load_dataset(self, year=None, tokens=False, courts=None):
+    def load_dataset(self, year=None, tokens=False, courts=None, dates=False):
         
         if year:
             data = self.load_json(f"{self.save_folder}/{year}.json")
@@ -96,5 +96,8 @@ class Dataset():
         
         if tokens:
             return [el["tokens"] for el in data]
+
+        if dates:
+            return [el["decision_date"] for el in data]
         
         return data
