@@ -5,9 +5,9 @@ import json
 class Seeds:
 
     start_narcotics = {'cannabis', 'cocaine', 'methamphetamine', 'drugs', 'drug', 'marijuana',
-                 'ecstasy', 'lsd', 'ketamine', 'heroin', 'fentanyl', 'overdose'}
+                 'ecstasy', 'lsd', 'ketamine', 'heroin', 'fentanyl', 'overdose', 'blunt'}
     start_weapons = {'gun', 'knife', 'weapon', 'firearm', 'rifle', 'carbine', 'shotgun', 'handgun',
-               'revolver', 'musket', 'pistol', 'derringer', 'assault', 'rifle', 'sword', 'blunt'}
+               'revolver', 'musket', 'pistol', 'derringer', 'assault', 'rifle', 'sword'}
     start_investigation = {'gang', 'mafia', 'serial', 'killer', 'rape', 'theft', 'recidivism',
                      'arrest', 'robbery', 'cybercrime', 'cyber', 'crime'}
 
