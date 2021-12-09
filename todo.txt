@@ -1,3 +1,0 @@
-1) Confrontare topic trovati nel notebook gensim
-2) Definire una ricerca per termine funzionante
-3) Definire metodologia per cercare nel tempo
