@@ -26,16 +26,24 @@ Notebook 04
 5. Filtraggio parole non presenti nel corpus.
 6. Pulizia manuale dei token finali.
 
-TOPIC MODELLING: DA FARE
+TOPIC MODELLING:
 Notebook 05
 
 1. Caricamento token da disco, solo della corte d'Appello (motivazione, che arriva un pò di tutto).
 2. Filtering dei token mantenendo le parole di interesse, rimuovendo:
     - parole più corte di 3 caratteri, 
     - termini che compaiono in oltre il 50% dei documenti e meno di 20 volte.
-3. Ottimizzazione di un LDA classico e un modello Guided:
-    - Numero di topic da 7 a 34 a passi di 3.
-4. Confronto tra i due modelli.
+3. Ottimizzazione di un LDA classico, fatto su Colab, testati da 5 a 32 topic con Halving Grid Search
+
+!!! 4. Aggiunta al dataset informazione sul topic del documento. (DA FARE)
+
+ANALISI: DA FARE
+Notebook 08
+
+1. Andamento topic nel tempo: visualizzo distribuzione anni per ogni topic.
+2. Differenze tra distribuzione dei topic nelle corti.
+3. Distribuzione parole per topic.
+
 
 VISUALIZZAZIONE
 ???

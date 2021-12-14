@@ -19,7 +19,7 @@ def get_words_relevance(words, word2id, vocab, lda_model, normalize=False, preci
     
     ret = {i : 0 for i in range(len(lda_model.components_))}
     for word in words:
-        for t, value in get_word_relevance(word, word2id, vocab, lda_model).items():
+        for t, value in get_word_relevance(word, word2id, vocab, lda_model, normalize=True).items():
             ret[t] += value
             
     return normalize_dict(ret) if normalize else ret
