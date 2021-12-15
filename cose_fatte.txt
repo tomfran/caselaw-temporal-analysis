@@ -34,8 +34,7 @@ Notebook 05
     - parole più corte di 3 caratteri, 
     - termini che compaiono in oltre il 50% dei documenti e meno di 20 volte.
 3. Ottimizzazione di un LDA classico, fatto su Colab, testati da 5 a 32 topic con Halving Grid Search
-
-!!! 4. Aggiunta al dataset informazione sul topic del documento. (DA FARE)
+4. Aggiunta al dataset informazione sul topic del documento.
 
 ANALISI: DA FARE
 Notebook 08

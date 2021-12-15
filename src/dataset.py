@@ -8,10 +8,12 @@ class Dataset():
     def __init__(self, 
                  dataset_path="", 
                  save_folder="../data/processed/docs", 
-                 tokens_folder="../data/processed/tokens"):
+                 tokens_folder="../data/processed/tokens", 
+                 topics_folder="../data/processed/topics"):
         self.dataset_path = dataset_path
         self.save_folder = save_folder
         self.tokens_folder = tokens_folder
+        self.topics_folder = topics_folder
         
     def process_line(self, document):
         
@@ -59,20 +61,22 @@ class Dataset():
             with open(path, "w") as f:
                 f.write(json.dumps(documents))
 
-    def merge_tokens_data(self):
+    def merge_tokens_topics_data(self):
         docs = sorted(os.listdir(self.save_folder))
         
         for doc in docs:
-                        
             doc_path = f"{self.save_folder}/{doc}"
             tokens_path = f"{self.tokens_folder}/{doc}"
+            topics_path = f"{self.topics_folder}/{doc}"
             print(f"Processing {doc}")
             
             data = self.load_json(doc_path)
             tokens = self.load_json(tokens_path)
+            topics = self.load_json(topics_path)
             
             for i,el in enumerate(data):
                 el["tokens"] = tokens[i]
+                el["topic"] = int(topics[i])
             
             with open(doc_path, "w") as f:
                 f.write(json.dumps(data))
@@ -81,7 +85,10 @@ class Dataset():
         with open(path, "r") as f: 
             return json.load(f)
         
-    def load_dataset(self, year=None, tokens=False, courts=None, dates=False):
+    def _filter_dict(self, d, fields):
+        return { k : v for k, v in d.items() if k in fields}
+
+    def load_dataset(self, year=None, fields=None, courts=None):
         
         if year:
             data = self.load_json(f"{self.save_folder}/{year}.json")
@@ -90,14 +97,11 @@ class Dataset():
             data = []
             for f in file_names:
                 data += self.load_json(f)
-            
+                
         if courts:
             data = [el for el in data if el["court"] in courts]
         
-        if tokens:
-            return [el["tokens"] for el in data]
-
-        if dates:
-            return [el["decision_date"] for el in data]
-        
+        if fields:
+            return [self._filter_dict(el, fields) for el in data]
+            
         return data
