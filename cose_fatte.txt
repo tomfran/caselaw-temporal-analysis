@@ -1,6 +1,7 @@
 RICERCA FATTA
 1. Guidare topic modelling: Incorporating Lexical Priors into Topic Models
 2. Query expansion: expansion con word embeddings (trova paper)
+3. Semantic shift dei termini negli anni: Diachronic Word Embeddings Reveal Statistical Laws of Semantic Change
 
 PREPROCESSING
 Notebook 01-02
@@ -35,13 +36,13 @@ Notebook 05
     - termini che compaiono in oltre il 50% dei documenti e meno di 20 volte.
 3. Ottimizzazione di un LDA classico, fatto su Colab, testati da 5 a 32 topic con Halving Grid Search
 4. Aggiunta al dataset informazione sul topic del documento.
+5. Andamento topic nel tempo: visualizzo distribuzione anni per ogni topic.
+6. Differenze tra distribuzione dei topic nelle corti.
+7. Distribuzione parole per topic.
 
-ANALISI: DA FARE
-Notebook 08
+WORD EMBEDDINGS
+Notebook 07
 
-1. Andamento topic nel tempo: visualizzo distribuzione anni per ogni topic.
-2. Differenze tra distribuzione dei topic nelle corti.
-3. Distribuzione parole per topic.
-
-VISUALIZZAZIONE
-???
+1. Allenato modello sulla corte d'appello, visualizzate le parole di interesse in 2d.
+2. Allenati modelli sugli intervalli di 5 anni.
+3. Prendendo spunto da "histwords", allineati i modelli per renderli confrontabili, individuando semantic shifts dei termini, da perfezionare.
