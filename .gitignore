@@ -5,6 +5,15 @@ data/
 
 papers/
 
+report/llncsdoc.pdf
+
+*.aux 
+*.fdb*
+*.fls
+*.log
+*.gz
+*.xdv
+
 notebooks/dask*
 notebooks/test*
 notebooks/fil*

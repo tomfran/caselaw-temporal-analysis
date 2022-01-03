@@ -76,7 +76,7 @@ class Dataset():
             
             for i,el in enumerate(data):
                 el["tokens"] = tokens[i]
-                el["topic"] = int(topics[i])
+                el["topic"] = [float(e) for e in topics[i]]
             
             with open(doc_path, "w") as f:
                 f.write(json.dumps(data))

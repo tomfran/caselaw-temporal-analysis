@@ -38,7 +38,7 @@ Notebook 05
 4. Aggiunta al dataset informazione sul topic del documento.
 5. Andamento topic nel tempo: visualizzo distribuzione anni per ogni topic.
 6. Differenze tra distribuzione dei topic nelle corti.
-7. Distribuzione parole per topic.
+7. Topic modelling su documenti dei topic 13, 0 e 2.
 
 WORD EMBEDDINGS
 Notebook 07
