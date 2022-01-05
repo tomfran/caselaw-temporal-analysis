@@ -2,7 +2,7 @@
 data/raw/*
 data/processed/*
 data/
-
+test
 papers/
 
 report/llncsdoc.pdf
