@@ -1,5 +1,67 @@
 # credits: https://gist.github.com/zhicongchen/9e23d5c3f1e5b1293b16133485cd17d8
 import numpy as np
+import matplotlib.pyplot as plt
+from gensim.models import Word2Vec, KeyedVectors
+import os
+
+def print_similar(word, models, n=5):
+    print(word)
+    for y, m in models.items():
+        try:
+            print(f"\t{y}: {[e[0] for e in m.wv.most_similar(word, topn=n)]}")
+        except:
+            pass
+        
+def cos_sim(a, b):
+    dot_product = np.dot(a, b) # x.y
+    norm_a = np.linalg.norm(a) #|x|
+    norm_b = np.linalg.norm(b) #|y|
+    return dot_product / (norm_a * norm_b)
+
+def get_similarity(m1, m2, word):
+    try:
+        return cos_sim(m1.wv[word], m2.wv[word])
+    except:
+        return -1
+    
+def get_similarity_sequence_base(models, base, word):
+    return [get_similarity(models[base], models[e], word) 
+            for e in sorted(models.keys(), reverse=True)]
+
+def get_similarity_sequence_consecutive(models, word):
+    k = list(sorted(models.keys(), reverse=True))
+    couples = zip(k, k[1:])
+    return [get_similarity(models[s], models[e], word) for s, e in couples] 
+
+def order_by_semantic_shift(words, models, base="2010", interval=-1):
+    res = []
+    for word in words:
+        s = get_similarity_sequence(models, base, word)[:interval]
+        s = [e for e in s if e>0]
+        if s:
+            index = np.argmin(s)
+            res.append((word, years[index], s[index]))
+        else:
+            print(word, "not in models")
+        
+    res.sort(key=lambda x : x[2])
+    return res
+
+def align_models(models):
+    k = list(sorted(models.keys(), reverse=True))
+    couples = zip(k, k[1:])
+    for base, other in couples:
+        smart_procrustes_align_gensim(models[base], models[other])
+
+def load_models(path):
+
+    def get_name(s):
+        s = s.split("/")[-1]
+        return int(s.split("_")[0])
+
+    return { get_name(model_name) : Word2Vec.load(model_name) 
+            for model_name in [f"{path}/{el}" 
+                               for el in sorted(os.listdir(path)) if "npy" not in el]}
 
 def smart_procrustes_align_gensim(base_embed, other_embed, words=None):
     """
@@ -91,3 +153,38 @@ def intersection_align_gensim(m1, m2, words=None):
         # print(len(m.wv.key_to_index), len(m.wv.vectors))
         
     return (m1,m2)
+
+def show_sequence_plot_base(word, base, models):
+    fig, axs = plt.subplots(1,1, figsize=(15,5))
+
+    x = [e for e in get_similarity_sequence_base(models, base, word) if e>0]
+
+    axs.plot(x)
+    plt.title(f"Word: {word}, base reference: {base}")
+    plt.ylim(0, 1)
+    plt.xlim(0, 1)
+    
+    years = list(sorted(models.keys(), reverse=True))
+    plt.xticks(ticks=range(len(x)), labels=years[:len(x)], rotation=90)
+    plt.yticks(ticks=[i/10 for i in range(11)])
+
+    plt.axhline(y=0.7, color='r', linestyle='-')
+    plt.show()
+    
+def show_sequence_plot_epochs(word, models):
+    fig, axs = plt.subplots(1,1, figsize=(15,5))
+
+    x = [e for e in get_similarity_sequence_consecutive(models, word) if e>0]
+
+    axs.plot(x)
+    plt.title(f"Word: {word}")
+    plt.ylim(0, 1)
+    plt.xlim(0, 1)
+    
+    years = list(sorted(models.keys(), reverse=True))
+    plt.xticks(ticks=range(len(x)), labels=years[:len(x)], rotation=90)
+    plt.yticks(ticks=[i/10 for i in range(11)])
+
+    plt.axhline(y=0.7, color='r', linestyle='-')
+    plt.show()
+    
