@@ -9,6 +9,7 @@ def normalize_dict(d, precision=3):
 def get_word_relevance(word, word2id, vocab, lda_model, normalize=False, precision=3):
     
     if word not in word2id:
+        print("word not found")
         return {i : 0 for i in range(len(lda_model.components_))}
     else:
         ret = {i : comp[word2id[word]] 
@@ -42,3 +43,12 @@ def print_topics(model, vectorizer, n_top_words=10, only_interesting=False, inte
         for w, r in words:
             s += f"{round(r, 2)}*{w} + "
         print(s[:-3])
+        
+def get_relevant_words(model, vocab, n_top_words, precision=3):
+    topic_words = {}
+    for topic, comp in enumerate(model.components_): 
+        word_idx = np.argsort(comp)[::-1][:n_top_words]
+        tot = sum([comp[i] for i in word_idx])
+        topic_words[topic] = [(vocab[i], round(comp[i]/tot, precision)) for i in word_idx]
+        
+    return topic_words
