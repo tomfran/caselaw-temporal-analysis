@@ -20,7 +20,8 @@ class Loader():
                  lda_model_small_path="../data/webapp/lda_model_small.pk", 
                  we_full_path="../data/webapp/we_full.model", 
                  we_one_year_path="../data/webapp/we_one_year_vectors", 
-                 we_ten_year_path="../data/webapp/we_ten_year_vectors"):
+                 we_ten_year_path="../data/webapp/we_ten_year_vectors", 
+                 topic_distributions_path="../data/webapp/topic_distributions.json"):
         
         print("Loading full count vectorizers... ", end="")
         # full count distributions
@@ -40,6 +41,8 @@ class Loader():
         self.word2id_lda_big = dict((v, idx) for idx, v in enumerate(self.vocab_lda_big))
         self.id2word_lda_big = dict((idx, v) for idx, v in enumerate(self.vocab_lda_big))
         self.lda_model_big = pickle.load(open(lda_model_big_path, "rb"))
+        self.topic_distributions = json.load(open(topic_distributions_path))
+        
         print("Done\nLoading small lda model... ", end="")
         # small lda
         self.vectors_lda_small = np.load(open(vectors_save_path_lda_small, "rb"), allow_pickle=True).item()
@@ -57,6 +60,8 @@ class Loader():
         self.we_ten_year = load_models(we_ten_year_path)
         align_models(self.we_ten_year)
         print("Done")
+        
+        
             
             
     
@@ -128,8 +133,11 @@ class Loader():
         return {"one_year"  : list(zip(y1, get_similarity_sequence_base(self.we_one_year, base_year, word))), 
                 "ten_year" : list(zip(y2, get_similarity_sequence_consecutive(self.we_ten_year, word)))}
     
-    def _get_topics_description():
-        return {}
+    def get_topics_description(self, topic=None):
+        return f"Topic {topic} description"
     
-    def _get_topics_date_distribution():
-        return {}
+    def get_topics_date_distribution(self, topic=None):
+        if 0 <= topic <= 13:
+            return self.topic_distributions[str(topic)]
+        else:
+            return self.topic_distributions
