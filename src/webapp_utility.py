@@ -61,10 +61,6 @@ class Loader():
         align_models(self.we_ten_year)
         print("Done")
         
-        
-            
-            
-    
     def get_freq_distribution(self, words, interval=1):
         
         def _frequency_intersection(l1, l2):
@@ -136,8 +132,22 @@ class Loader():
     def get_topics_description(self, topic=None):
         return f"Topic {topic} description"
     
-    def get_topics_date_distribution(self, topic=None):
-        if 0 <= topic <= 13:
-            return self.topic_distributions[str(topic)]
-        else:
-            return self.topic_distributions
+    def get_topics_date_distribution(self, interval=1):
+        
+        norm_dates = [e["decision_date"] - e["decision_date"]%interval 
+                      for e in self.doc_dates_topics]
+
+        dates_frequencies = defaultdict(lambda:0)
+
+        for d in norm_dates:
+            dates_frequencies[d] += 1
+            
+        topics_distribution = defaultdict(lambda:defaultdict(lambda:0))
+        for i, e in enumerate(self.doc_dates_topics):
+            topic_list = e["topic"]
+            date = norm_dates[i]
+
+            for j, v in enumerate(topic_list):
+                topics_distribution[j][date] += v/dates_frequencies[date]
+        
+        return {k : list(sorted(v.items())) for k, v in topics_distribution.items()}
