@@ -58,7 +58,16 @@ class Loader():
         align_models(self.we_ten_year)
         print("Done")
             
-    def get_freq_distribution(self, word, interval=1):
+            
+    
+    def get_freq_distribution(self, words, interval=1):
+        
+        def _frequency_intersection(l1, l2):
+            return [l1[i] and l2[i] for i in range(len(l1))]
+        
+        def _get_docs(word):
+            ind = self.word2id_big.get(word, -1)
+            return [min(1, occ) for occ in self.vectors_big_trans[ind].toarray()[0]]
         
         norm_dates = [e["decision_date"] - e["decision_date"]%interval 
                       for e in self.doc_dates_topics]
@@ -67,13 +76,14 @@ class Loader():
 
         for d in norm_dates:
             dates_frequencies[d] += 1
-            
-        ind = self.word2id_big.get(word, -1)
-        if ind < 0:
-            return []
+
+        freq_intersection = _get_docs(words[0])
+        
+        for word in words[1:]:
+            freq_intersection = _frequency_intersection(freq_intersection, _get_docs(word))
         
         dates = [norm_dates[index] for index, occ in 
-                enumerate(self.vectors_big_trans[ind].toarray()[0]) if occ > 0]
+                enumerate(freq_intersection) if occ > 0]
         
         freqs = defaultdict(lambda:0)
         for year in dates:
