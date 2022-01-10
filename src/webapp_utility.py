@@ -84,15 +84,15 @@ class Loader():
         
     def get_n_similar(self, word, n=5, model_type="full", year=2000):
         # get top n similar words wrt the word and model_type
-        # try:
+        try:
             if model_type == "full":
                 return self.we_full.wv.most_similar(word, topn=n)
             elif model_type == "one":
                 return self.we_one_year[year].wv.most_similar(word, topn=n)
             elif model_type == "ten":
                 return self.we_ten_year[year].wv.most_similar(word, topn=n)
-        # except:
-        #     return []
+        except:
+            return []
             
     def get_topic_dist(self, words, model="big"):
         
