@@ -1,1 +1,31 @@
 \section{Experimental results}
+
+\subsection{Dataset preprocessing}
+The dataset in use is the Illinois Bulk Dataset, that contains 
+183146 cases with 194366 judges opinions. 
+
+The first step of the preprocessing is to merge the opinions about a 
+case into one, obtaining a single document for each dataset entry.  
+Then, each document goes through a text cleaning and tokenization phase, 
+where the first part is done with the help of regular expressions, 
+while the second uses Spacy to obtain a list of terms.
+
+\subsection{Topic modelling}
+To have an overview of the topics discussed on the dataset a Latent 
+Dirichlet Allocation model is trained on the tokenized texts.
+One of the key parameters of such a model is the number of topics, and, 
+given the fact that cases could potentially talk about anything, an 
+\emph{Halving search} is performed to find a good value.~\cite{halving-search}
+
+We opt for an halving search since the number of topics could be anything, 
+we fixed a range between ten and thirty and training each model 
+to then evaluate results would take a huge amount of time. Halving search 
+mitigates the problem, as it trains firstly on smaller datasets, select 
+the best models, and retrain on bigger slices of data until a final model 
+is found. This methodology can be ten times faster then grid search. 
+The selection criterium for the search is the Log Likelihood of each model.
+The search revealed that the optimal number of topics is 14.
+
+\subsection{Temporal word embeddings}
+
+\subsection{Webapp}
