@@ -15,7 +15,7 @@ class Loader():
                  vectorizer_save_path_lda_big="../data/webapp/count_lda_big.pickle", 
                  vectors_save_path_lda_small="../data/webapp/count_lda_small.npy",
                  vectorizer_save_path_lda_small="../data/webapp/count_lda_small.pickle", 
-                 doc_dates_topics_path="../data/webapp/doc_dates_topics.json",
+                 doc_metadata_path="../data/webapp/doc_metadata.json",
                  topics_descriptions_path="../data/webapp/topics_descriptions.json",
                  lda_model_big_path="../data/webapp/lda_model_big.pk",
                  lda_model_small_path="../data/webapp/lda_model_small.pk", 
@@ -31,7 +31,7 @@ class Loader():
         self.word2id_big = dict((v, idx) for idx, v in enumerate(self.vocab_big))
         self.id2word_big = dict((idx, v) for idx, v in enumerate(self.vocab_big))
         self.vectors_big_trans = self.vectors_big.transpose()
-        self.doc_dates_topics = json.load(open(doc_dates_topics_path))
+        self.doc_metadata = json.load(open(doc_metadata_path))
         
         print("Done\nLoading full lda model... ", end="")
         # big lda
@@ -71,7 +71,7 @@ class Loader():
             return [min(1, occ) for occ in self.vectors_big_trans[ind].toarray()[0]]
         
         norm_dates = [e["decision_date"] - e["decision_date"]%interval 
-                      for e in self.doc_dates_topics]
+                      for e in self.doc_metadata]
 
         dates_frequencies = defaultdict(lambda:0)
 
@@ -132,10 +132,10 @@ class Loader():
     def get_topics_description(self, topic_id, category="General"):
         return self.topics_descriptions[category][str(topic_id)]
     
-    def get_topics_date_distribution(self, interval=1):
+    def get_topics_date_distribution(self, interval=1, model="big"):
         
         norm_dates = [e["decision_date"] - e["decision_date"]%interval 
-                      for e in self.doc_dates_topics]
+                      for e in self.doc_metadata]
 
         dates_frequencies = defaultdict(lambda:0)
 
@@ -143,11 +143,28 @@ class Loader():
             dates_frequencies[d] += 1
             
         topics_distribution = defaultdict(lambda:defaultdict(lambda:0))
-        for i, e in enumerate(self.doc_dates_topics):
-            topic_list = e["topic"]
+        for i, e in enumerate(self.doc_metadata):
+            topic_list = e["topic"] if model == "big" else e["small_topic"]
             date = norm_dates[i]
 
             for j, v in enumerate(topic_list):
                 topics_distribution[j][date] += v/dates_frequencies[date]
         
         return {k : list(sorted(v.items())) for k, v in topics_distribution.items()}
+    
+    def get_topics_court_distribution(self, model="big"):
+        
+        courts_distribution = defaultdict(lambda:defaultdict(lambda:0))
+        
+        for i, e in enumerate(self.doc_metadata):
+            topic_list = e["topic"] if model == "big" else e["small_topic"]
+            c = e["court"]
+            for j, v in enumerate(topic_list):
+                courts_distribution[j][c] += v
+        
+        for k in courts_distribution.keys():
+            v = courts_distribution[k]
+            tot = sum(v.values())
+            courts_distribution[k] = {a : b/tot for a, b in v.items()}
+        
+        return courts_distribution

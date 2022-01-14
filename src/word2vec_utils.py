@@ -18,12 +18,22 @@ def cos_sim(a, b):
     norm_b = np.linalg.norm(b) #|y|
     return dot_product / (norm_a * norm_b)
 
+def get_mean(arrays):
+    return np.average(arrays,axis=0)
+
 def get_similarity(m1, m2, word):
     try:
-        return cos_sim(m1.wv[word], m2.wv[word])
+        if isinstance(word, list):
+            v1 = get_mean([m1.wv[w] for w in word])
+            v2 = get_mean([m2.wv[w] for w in word])
+        else:
+            v1 = m1.wv[word]
+            v2 = m2.wv[word]
+            
+        return cos_sim(v1, v2)
     except:
         return -1
-    
+
 def get_similarity_sequence_base(models, base, word):
     return [get_similarity(models[base], models[e], word) 
             for e in sorted(models.keys(), reverse=True)]
