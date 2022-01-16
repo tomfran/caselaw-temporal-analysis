@@ -4,6 +4,7 @@ data/processed/*
 data/
 test
 papers/
+webapp/data/
 
 report/llncsdoc.pdf
 

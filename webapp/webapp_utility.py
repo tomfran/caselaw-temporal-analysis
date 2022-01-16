@@ -1,27 +1,30 @@
+import sys
+sys.path.append("..")
+
 import numpy as np
 import pickle
 import json
 from collections import defaultdict
 from gensim.models import Word2Vec, KeyedVectors
-from .word2vec_utils import load_models, align_models, get_similarity_sequence_base, get_similarity_sequence_consecutive
-from .lda_utils import get_word_relevance, get_words_relevance, get_relevant_words
+from src.word2vec_utils import load_models, align_models, get_similarity_sequence_base, get_similarity_sequence_consecutive
+from src.lda_utils import get_word_relevance, get_words_relevance, get_relevant_words
 
 class Loader():
     
     def __init__(self, 
-                 vectors_save_path_big="../data/webapp/count_big.npy",
-                 vectorizer_save_path_big="../data/webapp/count_big.pickle",
-                 vectors_save_path_lda_big="../data/webapp/count_lda_big.npy",
-                 vectorizer_save_path_lda_big="../data/webapp/count_lda_big.pickle", 
-                 vectors_save_path_lda_small="../data/webapp/count_lda_small.npy",
-                 vectorizer_save_path_lda_small="../data/webapp/count_lda_small.pickle", 
-                 doc_metadata_path="../data/webapp/doc_metadata.json",
-                 topics_descriptions_path="../data/webapp/topics_descriptions.json",
-                 lda_model_big_path="../data/webapp/lda_model_big.pk",
-                 lda_model_small_path="../data/webapp/lda_model_small.pk", 
-                 we_full_path="../data/webapp/we_full.model", 
-                 we_one_year_path="../data/webapp/we_one_year_vectors", 
-                 we_ten_year_path="../data/webapp/we_ten_year_vectors"):
+                 vectors_save_path_big="./data/count_big.npy",
+                 vectorizer_save_path_big="./data/count_big.pickle",
+                 vectors_save_path_lda_big="./data/count_lda_big.npy",
+                 vectorizer_save_path_lda_big="./data/count_lda_big.pickle",
+                 vectors_save_path_lda_small="./data/count_lda_small.npy",
+                 vectorizer_save_path_lda_small="./data/count_lda_small.pickle",
+                 doc_metadata_path="./data/doc_metadata.json",
+                 topics_descriptions_path="./data/topics_descriptions.json",
+                 lda_model_big_path="./data/lda_model_big.pk",
+                 lda_model_small_path="./data/lda_model_small.pk",
+                 we_full_path="./data/we_full.model",
+                 we_one_year_path="./data/we_one_year_vectors",
+                 we_ten_year_path="./data/we_ten_year_vectors"):
         
         print("Loading full count vectorizers... ", end="")
         # full count distributions
