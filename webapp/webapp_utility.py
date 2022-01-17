@@ -159,14 +159,19 @@ class Loader():
         
         courts_distribution = defaultdict(lambda:defaultdict(lambda:0))
         
+        tots = defaultdict(lambda:0)
         for i, e in enumerate(self.doc_metadata):
             topic_list = e["topic"] if model == "big" else e["small_topic"]
             c = e["court"]
+            tots[c] += 1
             for j, v in enumerate(topic_list):
                 courts_distribution[j][c] += v
         
         for k in courts_distribution.keys():
             v = courts_distribution[k]
+            for k2 in v.keys():
+                v[k2] /= tots[k2]
+                
             tot = sum(v.values())
             courts_distribution[k] = {a : b/tot for a, b in v.items()}
         
