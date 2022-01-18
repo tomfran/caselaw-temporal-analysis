@@ -26,6 +26,48 @@ is found. This methodology can be ten times faster then grid search.
 The selection criterium for the search is the Log Likelihood of each model.
 The search revealed that the optimal number of topics is 14.
 
+The resulting topics are promising but the words of interest, namely a collection 
+of narcotics, investigation and weapons terms, are merged together in a few topics. 
+To solve the issue we decide to run topic modelling on a subset of the previous 
+topics with the same technique as before. The result is similar, we find again 14 topics, 
+but this time they are much more specific.
+
 \subsection{Temporal word embeddings}
 
+One of the objective of the project is to find correlations among words and one tool 
+that can be used is word embeddings. The technique assigns a real vector of a given dimensions
+to each word in the document collection, creating a way to directly compare the context 
+similarity between two terms.
+
+For this task we used Gensim's Word2Vec implementation and trained different models 
+in three ways:
+\begin{enumerate}
+    \item \emph{Global model}: trained on the entire document collection, with 100 components vectors;
+    \item \emph{One year models}: they are trained on subsets of the dataset divided by years;
+    \item \emph{Ten years models}: trained on epochs of 10 years each.
+\end{enumerate}
+The first model gives information about the whole dataset, it can be used to compute 
+similar words queries, while the others can be exploited to find context and semantic shifts 
+among the temporal axis.
+Taking inspiration from the HistWords work on semantic shift, we start by aligning the models, 
+and then find, given a word and a base year, the similarity of that word in time with respect 
+to the base year. This approach can reveal if a word changed semantic or context, and when, 
+with respect to a given year, an example can be seen in \vref{fig1}. 
+
+Similarly, the ten year models are aligned, but this time, given a term, we compute the 
+difference among two consecutive epochs. The idea is similar to the previous one but slightly 
+different, this time a drop in the similarity sequence 
+reveals a change of meaning from an epoch to the other, the resulting 
+sequence can be seen in \vref{fig2}.
+
+\begin{figure}
+\includegraphics[width=\textwidth]{images/semantic_1.png}
+\caption{Semantic shift of the word assault 
+with respect to the year 2010, we can see a drop if similarity around 1960.} \label{fig1}
+\end{figure}
+\begin{figure}
+\includegraphics[width=\textwidth]{images/semantic_2.png}
+\caption{Similarity between consecutive epochs of the term assault, we can see a 
+drop between 1980-1970 and 1970-1960.} \label{fig2}
+\end{figure}
 \subsection{Webapp}
