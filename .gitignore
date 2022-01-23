@@ -5,8 +5,12 @@ data/
 test
 papers/
 webapp/data/
+heroku/
 
 report/llncsdoc.pdf
+report/out/
+report/auxil/
+report/.idea/
 
 *.aux 
 *.fdb*

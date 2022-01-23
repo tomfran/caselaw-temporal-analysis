@@ -71,3 +71,22 @@ with respect to the year 2010, we can see a drop if similarity around 1960.} \la
 drop between 1980-1970 and 1970-1960.} \label{fig2}
 \end{figure}
 \subsection{Webapp}
+In order to visualize and explore the results of the analysis, a web interface has been developed. Through the UI, the
+user can search multiple words united (separated by ",") and/or confront words (separated by "-"); the app will show
+various interesting sections:
+\begin{itemize}
+  \item Top 15 words of similar context of the searched words (using word embeddings).
+  \item Frequency graph of documents in time containing the searched words.
+  \item Semantic shifts of the searched words, both by epoch (two adjacent epochs of 10 years) and by single year.
+    If the user clicks on a point of the graph, the contexts of the selected word in the different selected years/epochs
+    will be showed, allowing the comparison of contexts which helps understanding the evolution of words meaning and usage
+    during time.
+  \item Topic distribution of the searched words (both generic and areas of interest-specific topics). By clicking on the
+    showed radar chart, or on the lateral list of topics, the selected topic info will be loaded in the below section.
+  \item Most important words of the selected topic. There are three ways of visualization: a barchart with the first 15
+    words, a Wordcloud with the first 80 and a Treemap with the first 50.
+  \item Topic distribution over time and over the different Illinois courts.
+\end{itemize}
+The application has been developed in Python and is accessible at https://illinois-cases-analysis-webapp-qka7d4ktba-ew.a.run.app/ .
+\subsubsection{Webapp developing technology}
+\subsubsection{Cloud hosting}

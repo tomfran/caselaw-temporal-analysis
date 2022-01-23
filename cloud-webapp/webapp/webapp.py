@@ -32,7 +32,7 @@ TEMPLATE = 'plotly_white'
 app_loader = Loader()
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
+server = app.server
 
 # ##### Navbar
 
@@ -361,7 +361,7 @@ def update_output(n_clicks, year, searches):
     
     searches = searches.split("-")
     fig = go.Figure(layout=go.Layout(
-        title="Frequency docs containing searched terms",
+        title="Frequency of docs containing searched terms",
         template=TEMPLATE,
         xaxis=dict(
             rangeselector=dict(
@@ -972,6 +972,5 @@ def _terminate_server_for_port(host, port):
 
 
 if __name__ == '__main__':
-    app.run_server(dev_tools_ui=True, debug=True,
-                   dev_tools_hot_reload=True, threaded=True)
+    app.run_server(debug=False, host="0.0.0.0", port=8080)
 
