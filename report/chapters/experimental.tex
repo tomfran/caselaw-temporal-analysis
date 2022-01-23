@@ -1,6 +1,7 @@
 \section{Experimental results}
 
 \subsection{Dataset preprocessing}
+
 The dataset in use is the Illinois Bulk Dataset, that contains 
 183146 cases with 194366 judges opinions. 
 
@@ -10,12 +11,25 @@ Then, each document goes through a text cleaning and tokenization phase,
 where the first part is done with the help of regular expressions, 
 while the second uses Spacy to obtain a list of terms.
 
+\subsection{Word of interest expansion}
+
+The project started with a collection of relevant words for three categories, 
+namely weapons, narcotics and investigations. The idea is to preserve these words
+in each preprocessing phase, especially when filtering out words 
+that do not meet a required frequency in the dataset. 
+To have a better set of interesting words to keep we opted to expand them 
+using pre-trained word embeddings, the \emph{GoogleNews} models.
+The process consists of finding similar words for each word 
+of interest, checking that these words are in the dataset, 
+with a manual final review to remove unnecessary or wrong words.
+
 \subsection{Topic modelling}
+
 To have an overview of the topics discussed on the dataset a Latent 
 Dirichlet Allocation model is trained on the tokenized texts.
 One of the key parameters of such a model is the number of topics, and, 
 given the fact that cases could potentially talk about anything, an 
-\emph{Halving search} is performed to find a good value.~\cite{halving-search}
+\emph{Halving search} is performed to find a good value.
 
 We opt for an halving search since the number of topics could be anything, 
 we fixed a range between ten and thirty and training each model 
@@ -70,9 +84,11 @@ with respect to the year 2010, we can see a drop if similarity around 1960.} \la
 \caption{Similarity between consecutive epochs of the term assault, we can see a 
 drop between 1980-1970 and 1970-1960.} \label{fig2}
 \end{figure}
+
 \subsection{Webapp}
+
 In order to visualize and explore the results of the analysis, a web interface has been developed. Through the UI, the
-user can search multiple words united (separated by ",") and/or confront words (separated by "-"); the app will show
+user can search multiple words united (separated by ",") and/or compare words (separated by "-"); the app will show
 various interesting sections:
 \begin{itemize}
   \item Top 15 words of similar context of the searched words (using word embeddings).
@@ -87,6 +103,8 @@ various interesting sections:
     words, a Wordcloud with the first 80 and a Treemap with the first 50.
   \item Topic distribution over time and over the different Illinois courts.
 \end{itemize}
-The application has been developed in Python and is accessible at https://illinois-cases-analysis-webapp-qka7d4ktba-ew.a.run.app/ .
+The application has been developed in Python and is accessible at \url{https://illinois-cases-analysis-webapp-qka7d4ktba-ew.a.run.app/}.
+
 \subsubsection{Webapp developing technology}
+
 \subsubsection{Cloud hosting}
