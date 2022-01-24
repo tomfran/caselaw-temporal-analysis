@@ -11,20 +11,22 @@ The research question is focused in particular on three main areas of interest:
 narcotics, weapons and investigations. Thus, words related to this three main sets
 are the most interesting ones to analyze.
 
-In the first place, the methodology aimed to separate the original dataset in three main areas,
-narcotics - weapons - investigations indeed; in this way, each document would have been assigned to one area.
-Having documents divided per area of interest, it would have been possible to divide documents in temporal
-periods and perform topic modelling and language modelling on the temporal subsections of the three areas. This
-analysis would have allowed to directly confront the three sets also in a temporal way, showing differences
-in the language and topics between words regarding drugs, narcotics and investigations respectively.
-Some scientific literature has been explored and tested, based on the idea of Guided topic modelling (paragraph 3.2 -
-Topic Modelling), but it has been soon discovered that the dataset comprehended many other topics other than the
-three main areas of interest, and most importantly even when finding documents and terms regarding them,
-it was pretty difficult to separate them in three distinct sets, because in reality the three sets are
-interconnecting each other, being usually used together.
+\subsection{Initial idea}
+\label{res-med}
+In the first place, the methodology aimed to divide the dataset into the three main areas, 
+corresponding to the area of interests previously introduced. 
+Having documents divided in areas, would have made possible to topic modelling and language modelling on the three areas, possibly considering the temporal factor in the process. 
 
-After this discovery, the methodology has been changed to a more general one: the dataset has been explored, by finding
-the various topics and language models composing it, finding also semantic shift in words context between different
-years and periods of time. After finding more generics topics, the discovered topics have been analyzed (and labelled),
-and the ones regarding the initial three areas of interest have been chosen to been explored more in depth, to find
-more meaningful results for the original research question.
+This approach would have allowed to directly confront the three sets also in a temporal way, showing differences in the language and topics between words regarding drugs, narcotics and investigations respectively.
+
+Some scientific literature has been explored and tested, based on the idea of Guided topic modelling 
+but it has been soon discovered that the dataset comprehended many other topics other than the
+three main areas of interest. Another drawback was the fact that even when finding promising results 
+with the guided method, the three topics were somehow intersecting too much, probably because the 
+area of interests are closely related to each other in real life.
+
+\subsection{Refined methodology}
+
+After coming to a dead end with the approach presented in the previous Subsection, we opted for a different
+overall methodology, guided topic modelling shifted towards a classical one and the temporal 
+analysis is performed with an heavy use of word embeddings.  
