@@ -89,9 +89,9 @@ in three ways:
 The first model gives information about the whole dataset, it can be used to compute 
 similar words queries, while the others can be exploited to find context and semantic shifts 
 among the temporal axis.
-Taking inspiration from the HistWords~\cite{hist-words} work on semantic shift, we start by aligning the models, 
+Taking inspiration from the \emph{HistWords} work on semantic shift, we start by aligning the models, 
 and then find, given a word and a base year, the similarity of that word in time with respect 
-to the base year. This approach can reveal if a word changed semantic or context, and when, 
+to the base year.~\cite{hist-words} This approach can reveal if a word changed semantic or context, and when, 
 with respect to a given year, an example can be seen in Figure \vref{fig2}.
 
 Similarly, the ten year models are aligned, but this time, given a term, we compute the 
@@ -137,8 +137,9 @@ various interesting sections, one focused on the analysis of the searched words:
     words, a Wordcloud with the first 80 and a Treemap with the first 50.
   \item Topic distribution over time and over the different Illinois courts.
 \end{itemize}
-The application has been developed in Python and is accessible at
-\url{https://illinois-cases-analysis-webapp-qka7d4ktba-ew.a.run.app/}.
+The application has been developed in Python. 
+% and is accessible at
+% \url{https://illinois-cases-analysis-webapp-qka7d4ktba-ew.a.run.app/}.
 
 \subsubsection{Webapp developing technology}
 
@@ -182,8 +183,9 @@ possible to use any of them.
 Google Cloud Platform has been chosen to host the webapp. In order to do so, a Docker image has been created, starting
 from the directory of the webapp. The image has been sent to Google Cloud through a build phase which created an online
 container of 16GB of memory and 4 CPUs, the last and only combination allowed which permitted also to load all the
-required files. In this way, by using Cloud Run, the webapp is officially a running service which can be accessed at
-\url{https://illinois-cases-analysis-webapp-qka7d4ktba-ew.a.run.app/}.\\
+required files. 
+% In this way, by using Cloud Run, the webapp is officially a running service which can be accessed at
+% \url{https://illinois-cases-analysis-webapp-qka7d4ktba-ew.a.run.app/}.\\
 Google Cloud offers a huge Free Tier, but because of the demanding configuration,
 the monthly cost is expected to be around three dollars. One downside of the selected hosting method is that the container instance is active only during the
 period in which requests are served, thus, if no other instance is active, the container has to be launched
@@ -191,5 +193,25 @@ from an idle state, taking about three or four minutes to be accessible, due to 
 has to load in order to make all the analysis functionality available.
 
 \subsection{Interesting findings}
-We now present three interesting findings with the developed tools, the first one is about murders, in 
-particular the difference of context between murders involving men and women.
+We now present a collection of interesting findings with the developed tools.
+The webapp allows to search for single or combinations of words, and the data on context change and topics can 
+reveal really interesting trends in time. 
+
+The first one is about murders, in particular the difference of context between murders involving men and 
+women. In the first case, the topics associated with the combination murder-man are theft related, while in the 
+second case, murder-woman is associated with the sexual victims topic. Searching for murder and rape reveals 
+similarity with kidnaps and robberies. 
+
+A second finding is about the context change of the word drug, in fact, the ten year epoch similarity 
+drops between 1940 and 1950, in the first case the word is associated with groceries, while in the 
+second the word shifted towards a narcotic context.
+
+If we associate the words drug and death we find that overdose is the closets word in term of vector distance.
+
+Another example is the change of context of the word homosexual, in the 60s it is associated with words such as 
+deviate, aggressive, unnatural, while in modern times it refers to sexual orientation.
+
+Analyzing the word assault, we can see that in the 60s it was associated with armed crimes, 
+while in modern days it has a sexual crime context. 
+
+Finally, in the most similar words with respect to home and murder combined we can find boyfriend, girlfriend and fiance.
