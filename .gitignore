@@ -15,6 +15,7 @@ report/.idea/
 cose_fatte.txt
 domande.txt
 topics
+.old
 
 *.aux 
 *.fdb*
