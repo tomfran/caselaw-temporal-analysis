@@ -12,6 +12,10 @@ report/out/
 report/auxil/
 report/.idea/
 
+cose_fatte.txt
+domande.txt
+topics
+
 *.aux 
 *.fdb*
 *.fls
