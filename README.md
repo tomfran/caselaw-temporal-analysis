@@ -4,8 +4,6 @@ The goal of the project is to apply information retrieval techniques to legal te
 
 The main idea is to study words in a temporal axis, finding trends regarding context or single or group of words, trends in frequency and regarding topics. 
 
----
-
 ## Methodology
 
 The overall process can be divided in preprocessing, topic modelling and word embeddings.
@@ -22,9 +20,7 @@ The next phase involves finding topics in the dataset, optimizing the number of 
 
 ### Word embeddings
 
-The main idea of this part is to train Word2vec models on year and epochs of the data, a similar word can be found [here]([GitHub - williamleif/histwords: Collection of tools for building diachronic/historical word vectors](https://github.com/williamleif/histwords)), in fact, we give credits to them for the model alignment that makes all the analysis in this part possible.
-
----
+The main idea of this part is to train Word2vec models on year and epochs of the data, a similar word can be found [here](https://github.com/williamleif/histwords), in fact, we give credits to them for the model alignment that makes all the analysis in this part possible.
 
 ## Webapp
 
