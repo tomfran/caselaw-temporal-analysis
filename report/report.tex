@@ -1,98 +1,33 @@
-% This is samplepaper.tex, a sample chapter demonstrating the
-% LLNCS macro package for Springer Computer Science proceedings;
-% Version 2.20 of 2017/10/04
-%
 \documentclass[runningheads]{llncs}
 %
 \usepackage{graphicx}
 \usepackage{varioref}
 \usepackage{float}
-% Used for displaying a sample figure. If possible, figure files should
-% be included in EPS format.
-%
-% If you use the hyperref package, please uncomment the following line
-% to display URLs in blue roman font according to Springer's eBook style:
-% \renewcommand\UrlFont{\color{blue}\rmfamily}
 
 \setcounter{secnumdepth}{4}
 \setlength{\belowcaptionskip}{-16pt}
 
 \begin{document}
-%
+
 \title{Illinois cases linguistic analysis}
-%
-%\titlerunning{Abbreviated paper title}
-% If the paper title is too long for the running head, you can set
-% an abbreviated paper title here
-%
+
 \author{Davide Carletti \and Francesco Tomaselli}
-%
 \authorrunning{D. Carletti \and F. Tomaselli}
-% First names are abbreviated in the running head.
-% If there are more than two authors, 'et al.' is used.
-%
 \institute{University of Milan}
-%
-\maketitle              % typeset the header of the contribution
-%
+\maketitle
+
 \begin{abstract}
-    Court judgments temporal analysis
-    
+    We here present an unsupervised methodology, based on topic modelling 
+    and word embeddings, to study temporal trends and correlations
+    in time of single and group of words in legal texts.    
     \keywords{Legal texts  \and Topic modelling \and Word embeddings}
 \end{abstract}
-%
-%
-%
-% \subsection{A Subsection Sample}
-% Please note that the first paragraph of a section or subsection is
-% not indented. The first paragraph that follows a table, figure,
-% equation etc. does not need an indent, either.
-
-% Subsequent paragraphs, however, are indented.
-
-% \subsubsection{Sample Heading (Third Level)} Only two levels of
-% headings should be numbered. Lower level headings remain unnumbered;
-% they are formatted as run-in headings.
-
-% \paragraph{Sample Heading (Fourth Level)}
-% The contribution should contain no more than four levels of
-% headings. Table~\ref{tab1} gives a summary of all heading levels.
-
-% \begin{table}
-    % \caption{Table captions should be placed above the
-    % tables.}\label{tab1}
-    % \begin{tabular}{|l|l|l|}
-        % \hline
-% Heading level &  Example & Font size and style\\
-% \hline
-% Title (centered) &  {\Large\bfseries Lecture Notes} & 14 point, bold\\
-% 1st-level heading &  {\large\bfseries 1 Introduction} & 12 point, bold\\
-% 2nd-level heading & {\bfseries 2.1 Printing Area} & 10 point, bold\\
-% 3rd-level heading & {\bfseries Run-in Heading in Bold.} Text follows & 10 point, bold\\
-% 4th-level heading & {\itshape Lowest Level Heading.} Text follows & 10 point, italic\\
-% \hline
-% \end{tabular}
-% \end{table}
-% \noindent Displayed equations are centered and set on a separate
-% line.
-% \begin{equation}
-% x + y = z
-% \end{equation}
-% Please try to avoid rasterized images for line-art diagrams and
-% schemas. Whenever possible, use vector graphics instead (see
-% Fig.~\ref{fig1}).
-
-% \begin{figure}
-% \includegraphics[width=\textwidth]{fig1.eps}
-% \caption{A figure caption is always placed below the illustration.
-% Please note that short captions are centered, while long ones are
-% justified by the macro package automatically.} \label{fig1}
-% \end{figure}
 
 \input{chapters/intro}
 \input{chapters/research}
 \input{chapters/experimental}
 \input{chapters/conclusions}
+
 \begin{thebibliography}{8}
 \bibitem{harvard_caselaw}
 Felix B. Chang, Erin McCabe and James Lee. ACL 2020. Mining the Harvard Caselaw Access Project.
@@ -109,21 +44,5 @@ Jaromir Savelka, Huihui Xu and Kevin D. Ashley. ACL 2019. Improving Sentence Ret
 \bibitem{argumentation_mining}
 Raquel Mochales and Marie-Francine Moens. ACL 2011. Argumentation Mining.
 
-% \bibitem{ref_lncs1}
-% Author, F., Author, S.: Title of a proceedings paper. In: Editor,
-% F., Editor, S. (eds.) CONFERENCE 2016, LNCS, vol. 9999, pp. 1--13.
-% Springer, Heidelberg (2016). \doi{10.10007/1234567890}
-
-% \bibitem{ref_book1}
-% Author, F., Author, S., Author, T.: Book title. 2nd edn. Publisher,
-% Location (1999)
-
-% \bibitem{ref_proc1}
-% Author, A.-B.: Contribution title. In: 9th International Proceedings
-% on Proceedings, pp. 1--2. Publisher, Location (2010)
-
-% \bibitem{ref_url1}
-% LNCS Homepage, \url{http://www.springer.com/lncs}. Last accessed 4
-% Oct 2017
 \end{thebibliography}
 \end{document}
