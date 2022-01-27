@@ -9,7 +9,7 @@ The first step of the preprocessing is to merge the opinions about a
 case into one, obtaining a single document for each dataset entry.  
 Then, each document goes through a text cleaning and tokenization phase, 
 where the first part is done with the help of regular expressions, 
-while the second uses Spacy to obtain a list of terms.
+while the second uses Spacy to obtain a list of terms in their lemmatized form.
 
 \subsection{Word of interest expansion}
 
@@ -18,7 +18,7 @@ namely weapons, narcotics and investigations. The idea is to preserve these word
 in each preprocessing phase, especially when filtering out words 
 that do not meet a required frequency in the dataset. 
 To have a better set of interesting words to keep we opted to expand them 
-using pre-trained word embeddings, the \emph{GoogleNews} models.
+using pre-trained word embeddings, the GoogleNews models.
 The process consists of finding similar words for each word 
 of interest, checking that these words are in the dataset, 
 with a manual final review to remove unnecessary or wrong words.
@@ -29,14 +29,15 @@ To have an overview of the topics discussed on the dataset a Latent
 Dirichlet Allocation model is trained on the tokenized texts.
 One of the key parameters of such a model is the number of topics, and, 
 given the fact that cases could potentially talk about anything, an 
-\emph{Halving search} is performed to find a good value.
+Halving search is performed to find a good value.
 
-We opt for an halving search since the number of topics could be anything, 
-we fixed a range between ten and thirty and training each model 
-to then evaluate results would take a huge amount of time. Halving search 
+\noindent The basic idea is to find the optimal number of topics in a given range, 
+here we try to find the best one between ten and thirty. A Grid search would 
+test all topic numbers, making the process really intensive and slow. 
+Halving search 
 mitigates the problem, as it trains firstly on smaller datasets, select 
 the best models, and retrain on bigger slices of data until a final model 
-is found. This methodology can be ten times faster then grid search. 
+is found. This methodology can be ten times faster than Grid search. 
 The selection criterium for the search is the Log Likelihood of each model.
 The search revealed that the optimal number of topics is 14. An overview of the found topics 
 can be seen on Figure \vref{figt1}.
@@ -48,12 +49,13 @@ can be seen on Figure \vref{figt1}.
   \end{center}
 \end{figure}
 
-The results are promising but the words of interest, namely a collection 
+\noindent Results are promising but the words of interest, namely a collection 
 of narcotics, investigation and weapons terms, are merged together in a few topics.
 
 To solve the issue we decide to run topic modelling on a subset of the previous 
 topics with the same technique as before. The result is similar, we find again 14 topics, 
-but this time they are much more specific, an example of specific topic distribution can be seen on Figure \vref{figt2}, with an in depth topic analysis on Figure \vref{figt3} 
+but this time they are much more specific, an example of specific topic distribution can 
+be seen on Figure \vref{figt2}, with an in depth topic analysis on Figure \ref{figt3}.
 \begin{figure}
   \begin{center}
     \includegraphics[width=\textwidth]{images/topic2.png}
@@ -69,9 +71,8 @@ but this time they are much more specific, an example of specific topic distribu
 
 As stated on Subsection \vref{res-med}, the first idea was to guide the topic modelling
 process to find three main topics, but the applied methodology failed on numerous occasions to 
-perform well, we believe that running two phases of topic modelling provided in a similar result, 
+perform well, we believe that running two phases of topic modelling resulted in a similar result, 
 while discovering much more about the dataset. 
-
 \subsection{Temporal word embeddings}
 
 One of the objective of the project is to find correlations among words and one tool 
@@ -83,19 +84,23 @@ For this task we used Gensim's Word2Vec implementation and trained different mod
 in three ways:
 \begin{enumerate}
     \item \emph{Global model}: trained on the entire document collection, with 100 components vectors;
-    \item \emph{One year models}: they are trained on subsets of the dataset divided by years;
-    \item \emph{Ten years models}: trained on epochs of 10 years each.
+    \item \emph{One year models}: they are trained on subsets of the dataset divided by years, with 300 components;
+    \item \emph{Ten years models}: trained on epochs of 10 years each, again with 300 components.
 \end{enumerate}
 The first model gives information about the whole dataset, it can be used to compute 
 similar words queries, while the others can be exploited to find context and semantic shifts 
 among the temporal axis.
 Taking inspiration from the \emph{HistWords} work on semantic shift, we start by aligning the models, 
 and then find, given a word and a base year, the similarity of that word in time with respect 
-to the base year.~\cite{hist-words} This approach can reveal if a word changed semantic or context, and when, 
+to the base year.~\cite{hist-words} 
+Technically, we compute the cosine similarity of each year vector 
+with respect to the vectors trained on the base year. This comparison is made possible by the 
+initial alignment, it would not be meaningful otherwise.
+This approach can reveal if a word changed semantic or context, and when, 
 with respect to a given year, an example can be seen in Figure \vref{fig2}.
 
 Similarly, the ten year models are aligned, but this time, given a term, we compute the 
-difference among two consecutive epochs. The idea is similar to the previous one but slightly 
+similarity among two consecutive epochs. The idea is similar to the previous one but slightly 
 different, this time a drop in the similarity sequence 
 reveals a change of meaning from an epoch to the other, the resulting 
 sequence can be seen in Figure \vref{fig3}.
@@ -121,51 +126,40 @@ sequence can be seen in Figure \vref{fig3}.
 In order to visualize and explore the results of the analysis, a web interface has been developed. Through the UI, the
 user can search multiple words united, separated by ",", and/or compare words, separated by "-"; the app will show
 various interesting sections, one focused on the analysis of the searched words: 
-% an example can be seen on figure
-% \vref{fig4}, and one on the
-% analysis of a selected topic, figure \vref{fig5}:
 \begin{itemize}
-  \item Top 15 words of similar context of the searched words, using word embeddings.
-  \item Frequency graph of documents in time containing the searched words.
-  \item Semantic shifts of the searched words, both by epoch, two adjacent epochs of 10 years, and by single year.
-    If the user clicks on a point of the graph, the contexts of the selected word in the different selected years/epochs
-    will be showed, allowing the comparison of contexts which helps understanding the evolution of words meaning and usage
-    during time.
-  \item Topic distribution of the searched words, both generic and areas of interest-specific topics. By clicking on the
-    showed radar chart, or on the lateral list of topics, the selected topic info will be loaded in the below section.
-  \item Most important words of the selected topic. There are three ways of visualization: a barchart with the first 15
-    words, a Wordcloud with the first 80 and a Treemap with the first 50.
-  \item Topic distribution over time and over the different Illinois courts.
+  \item Top 15 words of similar context of the searched words, using the Global word embeddings model.
+  \item Frequency of the single or group of searched words in time.
+  \item Semantic shifts of the searched words, both by epoch and by single year.
+    If the user clicks on a point of the graph, the similar words with respect to the query 
+    are shown, based on the year where the user clicked, making possible to evaluate the  
+    shift between epochs or years. Figure \vref{fig3} shows the result of clicking year 1970.
+  \item Topic distribution of the query, both generic and specific. Clicking 
+  a topic on the list or chart reveals an in-depth analysis in the subsequent section.
+  \item Topic analysis section, showing most important words for a given topic, in a barchart, 
+  a Wordcloud and a Treemap. The year distribution and the relevance in the four different courts of the topic is also shown. Figure \vref{figt3} contains an example of the section.
 \end{itemize}
 
-\subsubsection{Webapp developing technology}\hfill\\
+\subsubsection{Webapp developing technology}
+For the webapp development, three python-based frameworks for web developing have been considered, the 
+first being the combination of Voila and ipywidgets. This would have been the natural candidates as the whole project has 
+been developed using Jupyter notebooks. Ipywidgets allows to create dynamic notebook elements, while 
+Voila can create a good design and permits to hide code cells.
+They have been discarded because of the technical requirements needed to run and understand a Jupyter
+notebook; even if the complexity could have been partially hidden, the graphics component of Ipywidgets 
+are not so captivating.
 
-In order to fastly create an interesting interface, three python-based frameworks for web developing have been considered:
-\begin{itemize}
-    \item Voila and ipywidgets. Because the whole project has been developed using Jupyter notebooks, it would have
-    been natural to develop the webapp in a new notebook. ipywidgets allow to create dynamic elements and behaviour to
-    a Jupyter Notebook, while Voila allows to have better design and the possibility to run the notebook as if it is
-    a web page, hiding all the code and markdown of the notebook itself.
-    \item Dash. It consists in a point-\&-click interface to models written in Python, vastly expanding the notion of
-    what's possible in a traditional "dashboard." It is the main solution for data scientists and engineers in order to
-    put complex Python analytics in the hands of business decision-makers and operators.
-    \item Streamlit. Similar to Dash.
-\end{itemize}
-Voila and ipywidgets have been discarded because of the technical requirements needed to run and understand a Jupyter
-notebook; even if the complexity could have been partially hidden, the graphics component of ipywidgets are not so
-captivating.
+\noindent The second options are Dash and Streamlit, they can create a point-\&-click dashboard to visualize 
+models, and they are the main solutions for data scientists and engineers in order to
+put complex Python analytics in the hands of business decision-makers and operators.
+While similar in terms of interface design, Dash has been choose because of its popularity and presence in the data science applications world.
 
-Dash and Streamlit are really similar one to another, with both offering beautiful interfaces easy to deploy. Dash has
-been chosen because of its popularity and presence in the data science applications world, but Streamlit is quite new
-but in the last years it has gained a lot of popularity and attention.
+In all three frameworks, and particularly in Dash, the workflow is pretty similar: the design elements 
+of the UI are defined in an HTML fashion using the framework Python libraries predefined classes.
+The user-generated events are captured using callback functions, which connect the input elements, e.g. 
+a button which has been clicked, to output
+elements, e.g. a plot, defining the required processing and manipulation of output elements.
 
-In all three frameworks, and particularly in Dash, the workflow is pretty similar; the design elements of the UI are
-defined in an HTML-style using the framework Python libraries predefined classes, while the user-generated events are
-captured using callback functions, which connect the input elements (e.g. a button which has been clicked) to output
-elements (e.g. a graph), defining the required processing and manipulation of output elements.
-
-\subsubsection{Cloud hosting}\hfill\\
-
+\subsubsection{Cloud hosting}
 Since the developed webapp prototype shows some potential in finding interesting trends about words, we 
 decided to host the project on a public domain, in order to give anyone the possibility to make queries 
 without a technical knowledge or any installation requirement.
