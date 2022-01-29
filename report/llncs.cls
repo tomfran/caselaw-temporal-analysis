@@ -339,12 +339,14 @@
 
 \renewcommand\section{\@startsection{section}{1}{\z@}%
                        {-18\p@ \@plus -4\p@ \@minus -4\p@}%
-                       {12\p@ \@plus 4\p@ \@minus 4\p@}%
+                      %  {12\p@ \@plus 4\p@ \@minus 4\p@}%
+                       {7\p@ \@plus 4\p@ \@minus 4\p@}%
                        {\normalfont\large\bfseries\boldmath
                         \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
                        {-18\p@ \@plus -4\p@ \@minus -4\p@}%
-                       {8\p@ \@plus 4\p@ \@minus 4\p@}%
+                      %  {8\p@ \@plus 4\p@ \@minus 4\p@}%
+                       {4\p@ \@plus 4\p@ \@minus 4\p@}%
                        {\normalfont\normalsize\bfseries\boldmath
                         \rightskip=\z@ \@plus 8em\pretolerance=10000 }}
 % \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
