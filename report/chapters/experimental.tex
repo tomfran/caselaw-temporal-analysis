@@ -88,22 +88,22 @@ in three ways:
     \item \emph{One year models}: they are trained on subsets of the dataset divided by years, with 300 components;
     \item \emph{Ten years models}: trained on epochs of 10 years each, again with 300 components.
 \end{enumerate}
-The first model gives information about the whole dataset, it can be used to compute 
-similar words queries, while the others can be exploited to find context and semantic shifts 
-among the temporal axis.
+The first model gives information about the whole dataset, and it can be used to compute
+similar words queries or to show the context of searched words, while the others can be exploited to find context
+and semantic shifts among the temporal axis.
 Taking inspiration from the \emph{HistWords} work on semantic shift, we start by aligning the models, 
 and then find, given a word and a base year, the similarity of that word in time with respect 
 to the base year.~\cite{hist-words} 
 Technically, we compute the cosine similarity of each year vector 
 with respect to the vectors trained on the base year. This comparison is made possible by the 
-initial alignment, it would not be meaningful otherwise.
+initial alignment of the vectors, otherwise it would not be meaningful.
 This approach can reveal if a word changed semantic or context, and when, 
 with respect to a given year, an example can be seen in Figure \vref{fig2}.
 
-Similarly, the ten year models are aligned, but this time, given a term, we compute the 
+Similarly, the ten years models are aligned, but this time, given a term, we compute the
 similarity among two consecutive epochs. The idea is similar to the previous one but slightly 
-different, this time a drop in the similarity sequence 
-reveals a change of meaning from an epoch to the other, the resulting 
+different; in this case, a drop in the similarity sequence
+reveals a change of meaning from an epoch to the other. The resulting
 sequence can be seen in Figure \vref{fig3}.
 
 \begin{figure}
@@ -126,7 +126,8 @@ sequence can be seen in Figure \vref{fig3}.
 \subsection{Webapp}
 In order to visualize and explore the results of the analysis, a web interface has been developed. Through the UI, the
 user can search multiple words united, separated by ",", and/or compare words, separated by "-"; the app will show
-various interesting sections, one focused on the analysis of the searched words: 
+various interesting sections, with two main areas focused on the analysis of the searched words and the selected topics
+respectively:
 \begin{itemize}
   \item Top 15 words of similar context of the searched words, using the Global word embeddings model.
   \item Frequency of the single or group of searched words in time.
@@ -137,7 +138,7 @@ various interesting sections, one focused on the analysis of the searched words:
   \item Topic distribution of the query, both generic and specific. Clicking 
   a topic on the list or chart reveals an in-depth analysis in the subsequent section.
   \item Topic analysis section, showing most important words for a given topic, in a barchart, 
-  a Wordcloud and a Treemap. The year distribution and the relevance in the four different courts of the topic is also shown. Figure \vref{figt3} contains an example of the section.
+  a Wordcloud and a Treemap. The years distribution and the relevance in the four different courts of the topic is also shown. Figure \vref{figt3} contains an example of the section.
 \end{itemize}
 
 \subsubsection{Webapp developing technology}
@@ -193,17 +194,15 @@ second case, murder-woman is associated with the sexual victims topic. Searching
 similarity with kidnaps and robberies. 
 
 A second finding is about the context change of the word drug, in fact, the ten year epoch similarity 
-drops between 1940 and 1950, in the first case the word is associated with groceries, while in the 
+drops between 1940 and 1950, where in the first case the word is associated with groceries, while in the
 second the word shifted towards a narcotic context.
 
-If we associate the words drug and death we find that overdose is the closets word in term of vector distance.
+If we associate the words drug and death we find that overdose is the closest word in term of vector distance.
 
-Another example is the change of context of the word homosexual, in the 60s it is associated with words such as 
+Another example is the change of context of the word homosexual; in the 60s it is associated with words such as
 deviate, aggressive, unnatural, while in modern times it refers to sexual orientation.
 
 Analyzing the word assault, we can see that in the 60s it was associated with armed crimes, 
-while in modern days it has a sexual crime context. 
-
-In the most similar words with respect to home and murder combined we can find boyfriend, girlfriend and fiance.
+while in modern days it has a sexual crime context.
 
 Regarding courts and topics, we can 
