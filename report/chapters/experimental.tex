@@ -2,9 +2,6 @@
 
 \subsection{Dataset preprocessing}
 
-The dataset in use is the Illinois Bulk Dataset, that contains 
-183146 cases with 194366 judges opinions. 
-
 The first step of the preprocessing is to merge the opinions about a 
 case into one, obtaining a single document for each dataset entry.  
 Then, each document goes through a text cleaning and tokenization phase, 
@@ -31,7 +28,7 @@ One of the key parameters of such a model is the number of topics, and,
 given the fact that cases could potentially talk about anything, an 
 Halving search is performed to find a good value.
 
-\noindent The basic idea is to find the optimal number of topics in a given range, 
+The basic idea is to find the optimal number of topics in a given range, 
 here we try to find the best one between ten and thirty. A Grid search would 
 test all topic numbers, making the process really intensive and slow. 
 Halving search 
@@ -74,6 +71,7 @@ As stated on Subsection \vref{res-med}, the first idea was to guide the topic mo
 process to find three main topics, but the applied methodology failed on numerous occasions to 
 perform well, we believe that running two phases of topic modelling resulted in a similar result, 
 while discovering much more about the dataset. 
+
 \subsection{Temporal word embeddings}
 
 One of the objective of the project is to find correlations among words and one tool 
@@ -124,6 +122,7 @@ sequence can be seen in Figure \vref{fig3}.
 \end{figure}
 
 \subsection{Webapp}
+
 In order to visualize and explore the results of the analysis, a web interface has been developed. Through the UI, the
 user can search multiple words united, separated by ",", and/or compare words, separated by "-"; the app will show
 various interesting sections, with two main areas focused on the analysis of the searched words and the selected topics
@@ -142,6 +141,7 @@ respectively:
 \end{itemize}
 
 \subsubsection{Webapp developing technology}
+
 For the webapp development, three python-based frameworks for web developing have been considered, the 
 first being the combination of Voila and ipywidgets. This would have been the natural candidates as the whole project has 
 been developed using Jupyter notebooks. Ipywidgets allows to create dynamic notebook elements, while 
@@ -150,7 +150,7 @@ They have been discarded because of the technical requirements needed to run and
 notebook; even if the complexity could have been partially hidden, the graphics component of Ipywidgets 
 are not so captivating.
 
-\noindent The second options are Dash and Streamlit, they can create a point-\&-click dashboard to visualize 
+The second options are Dash and Streamlit, they can create a point-\&-click dashboard to visualize 
 models, and they are the main solutions for data scientists and engineers in order to
 put complex Python analytics in the hands of business decision-makers and operators.
 While similar in terms of interface design, Dash has been choose because of its popularity and presence in the data science applications world.
@@ -162,6 +162,7 @@ a button which has been clicked, to output
 elements, e.g. a plot, defining the required processing and manipulation of output elements.
 
 \subsubsection{Cloud hosting}
+
 Since the developed webapp prototype shows some potential in finding interesting trends about words, we 
 decided to host the project on a public domain, in order to give anyone the possibility to make queries 
 without a technical knowledge or any installation requirement.
@@ -204,5 +205,3 @@ deviate, aggressive, unnatural, while in modern times it refers to sexual orient
 
 Analyzing the word assault, we can see that in the 60s it was associated with armed crimes, 
 while in modern days it has a sexual crime context.
-
-% Regarding courts and topics, we can 
