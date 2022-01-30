@@ -666,7 +666,8 @@ def get_generic_topics_radar_graph(n_clicks, tab, searches):
         words = [word.strip() for word in search.split(",")]
         
         topics = app_loader.get_topic_dist(words, model="big" if tab == "General" else "small")
-        values = numpy.array(list(topics.values()), dtype='f') * 100 / max(topics.values())
+        # values = numpy.array(list(topics.values()), dtype='f') * 100 / max(topics.values())
+        values = numpy.array(list(topics.values()), dtype='f')
         
         fig.add_trace(go.Scatterpolar(
             r=values,
