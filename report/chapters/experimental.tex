@@ -2,6 +2,7 @@
 
 \subsection{Dataset preprocessing}
 
+The dataset in use contains 183146 cases with 194366 judges opinions. 
 The first step of the preprocessing is to merge the opinions about a 
 case into one, obtaining a single document for each dataset entry.  
 Then, each document goes through a text cleaning and tokenization phase, 
@@ -28,7 +29,7 @@ One of the key parameters of such a model is the number of topics, and,
 given the fact that cases could potentially talk about anything, an 
 Halving search is performed to find a good value.
 
-The basic idea is to find the optimal number of topics in a given range, 
+\noindent The basic idea is to find the optimal number of topics in a given range, 
 here we try to find the best one between ten and thirty. A Grid search would 
 test all topic numbers, making the process really intensive and slow. 
 Halving search 
@@ -79,7 +80,7 @@ that can be used is word embeddings. The technique assigns a real vector of a gi
 to each word in the document collection, creating a way to directly compare the context 
 similarity between two terms.
 
-\noindent For this task we used Gensim's Word2Vec implementation and trained different models 
+ For this task we used Gensim's Word2Vec implementation and trained different models 
 in three ways:
 \begin{enumerate}
     \item \emph{Global model}: trained on the entire document collection, with 100 components vectors;
@@ -94,7 +95,7 @@ and then find, given a word and a base year, the similarity of that word in time
 to the base year.~\cite{hist-words} 
 Technically, we compute the cosine similarity of each year vector 
 with respect to the vectors trained on the base year. This comparison is made possible by the 
-initial alignment of the vectors, otherwise it would not be meaningful.
+initial alignment of the models, otherwise it would not be meaningful.
 This approach can reveal if a word changed semantic or context, and when, 
 with respect to a given year, an example can be seen in Figure \vref{fig2}.
 
@@ -106,7 +107,7 @@ sequence can be seen in Figure \vref{fig3}.
 
 \begin{figure}
 \begin{center}
-  \includegraphics[width=\textwidth]{images/semantic_2.png}
+  \includegraphics[width=0.8\textwidth]{images/semantic_2.png}
   \caption{Semantic shift of the word cocaine, assault and weapon 
   with respect to the year 2010. A drop of the assault curve in 1959 correspond to 
   a different context with respect to the base year, as proven by the different similar words.} \label{fig2}
@@ -115,7 +116,7 @@ sequence can be seen in Figure \vref{fig3}.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[width=\textwidth]{images/semantic_1.png}
+    \includegraphics[width=0.9\textwidth]{images/semantic_1.png}
     \caption{Similarity between consecutive epochs of the terms cocaine, assault and weapon. Comparing 
     the similar words, we can see that the drop of the cocaine curve around 1970 correspond to a shift in context.} \label{fig3}
   \end{center}
@@ -168,12 +169,11 @@ decided to host the project on a public domain, in order to give anyone the poss
 without a technical knowledge or any installation requirement.
 
 Firstly, many free-to-use hosting sites of Python web applications have been tested, such as PythonAnywhere and Heroku,
-but all of them allowed a to small free tier, for instance of one gigabyte of disk. 
-Because of the large data that is used to show the various statistics, having models taking up to five gigabytes of space,
-it was not possible to use any of them.
+but all of them allowed a to small free tier and because of the large data that is used to show the various statistics, it was not possible to use any of them.
 
 Google Cloud Platform has been chosen to host the webapp. A Docker image of the project has been created, which
-has been built to Google Cloud Run, creating an online container of 16GB of memory and 4 CPUs, the last and only combination allowed which permitted also to load all the
+has been built to Google Cloud Run, creating an online container of 16GB of memory and 4 CPUs
+, the last and only combination allowed which permitted also to load all the
 required files. 
 Google Cloud offers a huge Free Tier, but because of the demanding configuration,
 the monthly cost is expected to be around three dollars.
@@ -198,7 +198,7 @@ A second finding is about the context change of the word drug, in fact, the ten 
 drops between 1940 and 1950, where in the first case the word is associated with groceries, while in the
 second the word shifted towards a narcotic context.
 
-If we associate the words drug and death we find that overdose is the closest word in term of vector distance.
+\noindent If we associate the words drug and death we find that overdose is the closest word in term of vector distance.
 
 Another example is the change of context of the word homosexual; in the 60s it is associated with words such as
 deviate, aggressive, unnatural, while in modern times it refers to sexual orientation.
