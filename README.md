@@ -2,7 +2,7 @@
 
 The goal of the project is to apply information retrieval techniques to legal text, in particular, LDA topic modelling and Word Embeddings. 
 
-The main idea is to study words in a temporal axis, finding trends regarding context or single or group of words, trends in frequency and regarding topics. 
+The main idea is to study words in the temporal axis, finding trends regarding context, frequency and topics. 
 
 The dataset in use is the [Illinois portion](https://case.law/bulk/download/) of the Harvard Caselaw Access Project.
 
@@ -22,7 +22,7 @@ The next phase involves finding topics in the dataset, optimizing the number of 
 
 ### Word embeddings
 
-The main idea of this part is to train Word2vec models on year and epochs of the data, a similar word can be found [here](https://github.com/williamleif/histwords), in fact, we give credits to them for the model alignment that makes all the analysis in this part possible.
+The idea of this part is to train Word2vec models on year and epochs of the data, a similar work can be found [here](https://github.com/williamleif/histwords), in fact, we give credits to them for the model alignment that makes all the analysis in this part possible.
 
 ## Webapp
 
